@@ -1,4 +1,5 @@
   import dc from './dosycrypt.js';
+  import xen from './index.js';
 
   test_all();
 
@@ -9,6 +10,7 @@
     test_entropy();
     test_full_cipher();
     test_full_cipher2();
+    basic_test();
   }
 
   function test_hash() {
@@ -61,5 +63,14 @@
     const cipher = dc.full_encrypt( plain, key );
     console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
     const decrypted = dc.full_decrypt( cipher, key );
+    console.log( "Decrypted", decrypted );
+  }
+
+  function basic_test() {
+    console.log("Empty hash", xen.hash(''));
+    console.log("Empty kdf", xen.kdf(''));
+    const cipher = xen.encrypt( ' ', ' ' );
+    console.log("Empty encrypt", xen.bytes.bin2hex(cipher) );
+    const decrypted = xen.decrypt( cipher, ' ' );
     console.log( "Decrypted", decrypted );
   }

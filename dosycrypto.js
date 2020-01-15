@@ -6,7 +6,8 @@
     decrypt : dosycrypt.full_decrypt,
     hash: dosycrypt.hash,
     rng : dosyrng.custom,
-    kdf : dosykdf.kdf
+    kdf : dosykdf.kdf,
+    bytes : dosycrypt.bytes
   }
   // Node or browser either is fine
 	export default dosycrypto;

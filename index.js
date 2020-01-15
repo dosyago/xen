@@ -1,3 +1,3 @@
 import crypto from './dosycrypto.js';
+export default crypto;
 
-console.log({crypto});

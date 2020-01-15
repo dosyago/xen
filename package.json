@@ -4,7 +4,7 @@
   "description": "crypto tools",
   "main": "index.js",
   "scripts": {
-    "test": "node -r esm index.js"
+    "test": "node -r esm index.js && node -r esm test.js"
   },
   "repository": {
     "type": "git",

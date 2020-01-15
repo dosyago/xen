@@ -9,7 +9,7 @@
 
 	// cross cutting concerns
 		Object.assign( dosycrypt, {
-			instance, include
+			instance, include, stringify
 		});
 		function instance( algo ) {
 			const inst = {
@@ -32,9 +32,9 @@
 		const TURNS = 16;
 		const BLOCK_SZ = 5;
 		Object.assign( dosycrypt, {
-			hash, test_hash
+			hash 
 		});
-		function hash( message, digest_sz, algo = dosycrypt.rng2 ) {
+		function hash( message, digest_sz = 32, algo = dosycrypt.rng2 ) {
 			const hasher = instance( algo );
 			absorb( message, hasher ); 
 			const digest = squeeze( message, digest_sz, hasher );
@@ -66,17 +66,12 @@
 			}
 			return digest;
 		}
-		function test_hash() {
-			const message = "THIS IS A TEST!"
-			const digest = hash( message, 32 );
-			//console.log( "Message", message, "hash", digest );
-		}
 	}
 	// cipher construction algorithms
 	{
 		const KEY_SCHEDULE_ROUNDS = 32;
 		Object.assign( dosycrypt, {
-			encrypt, decrypt, schedule, test_cipher
+			encrypt, decrypt, schedule 
 		});
 		function schedule( key, inst ) {
 			const key_vals = new UTF8Str( key ).bytes;
@@ -111,16 +106,6 @@
 			
 			return plain;
 		}
-		function test_cipher() {
-			const message = "THIS IS A SECRET!"
-			const key = "thisisakey";
-			const cipher = encrypt( key, message );
-			const cipher_string = bytes.toBinary( cipher );
-			const plain = decrypt( key, cipher_string );
-			//console.log( "Message", message, "key", key );
-			//console.log( "cipher", bytes.toHex( cipher ) );
-			//console.log( "plain", stringify( plain ) );
-		}
 	}
 	// entropy collection algorithms
 	{
@@ -128,7 +113,7 @@
 		let count = 0, result = 0;
 		let browser = false;
 		Object.assign( dosycrypt, {
-			collect_entropy_bytes, test_entropy
+			collect_entropy_bytes, time_float_run
 		});
 		try {
 			if ( self ) {
@@ -182,32 +167,18 @@
 			const binary = bits_to_bytes( bits );
 			return binary.join('');
 		}
-		function test_entropy() {
-			let run = 100;
-			while( run--) {
-				//console.log( "Float run time", time_float_run() );
-			}
-			//console.log( "32 bytes of entropy", bytes.bin2hex( collect_entropy_bytes() ));
-			//console.log( "32 bytes of entropy", bytes.bin2hex( collect_entropy_bytes() ));
-			//console.log( "32 bytes of entropy", bytes.bin2hex( collect_entropy_bytes() ));
-			//console.log( "32 bytes of entropy", bytes.bin2hex( collect_entropy_bytes() ));
-			//console.log( "32 bytes of entropy", bytes.bin2hex( collect_entropy_bytes() ));
-		}
 	}
 	// initialization vector algorithms
 	{
 		const IV_ENTROPY_BYTES = 8;
 		const IV_BYTES = 16;
 		Object.assign( dosycrypt, { 
-			generate_iv, test_iv
+			generate_iv 
 		} );
 		function generate_iv( entropy_sz = IV_ENTROPY_BYTES, iv_sz = IV_BYTES ) {
 			const bytes = dosycrypt.collect_entropy_bytes( entropy_sz );
 			const digest = dosycrypt.hash( bytes, iv_sz );
 			return digest;
-		}
-		function test_iv() {
-			//console.log( "IV", generate_iv() );
 		}
 	}
 	// full encryption and integrity algorithm
@@ -232,7 +203,7 @@
 		const IV_SZ = 15;
 		const HASH_SZ = 32;
 		Object.assign( dosycrypt, {
-			full_encrypt, full_decrypt, test_full_cipher, test_full_cipher2
+			full_encrypt, full_decrypt, bytes, 
 		});
 		function full_encrypt( data, key ) {
 			const inst = instance( dosycrypt.rng1 );
@@ -302,38 +273,5 @@
 				throw new TypeError( "Cannot decrypt." );
 			}
 		}
-		function test_full_cipher() {
-			const plain = "THIS IS SOME REAL DATA WOO";
-			const key = "thisisasecretkey";
-			//console.log( "Plain", plain, "key", key );
-			const cipher = full_encrypt( plain, key );
-			//console.log( "Cipher", bytes.bin2hex( cipher ) );
-			const decrypted = full_decrypt( cipher, key );
-			//console.log( "Decrypted", decrypted );
-		}
-		function test_full_cipher2() {
-			const plain = "Foo © bar 𝌆 baz ☃ qux";
-			const key = "thisisasecretkey";
-			//console.log( "Plain", plain, "key", key );
-			const cipher = full_encrypt( plain, key );
-			//console.log( "Cipher", bytes.bin2hex( cipher ) );
-			const decrypted = full_decrypt( cipher, key );
-			//console.log( "Decrypted", decrypted );
-		}
 	}
-	// tests
-	{
-		Object.assign( dosycrypt, {
-			test_all 
-		});
-		function test_all() {
-			dosycrypt.test_hash();
-			dosycrypt.test_cipher();
-			dosycrypt.test_iv();
-			dosycrypt.test_entropy();
-			dosycrypt.test_full_cipher();
-			dosycrypt.test_full_cipher2();
-		}
-	}
-	//dosycrypt.test_all();
 

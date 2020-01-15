@@ -1,0 +1,27 @@
+{
+  "name": "@dosy-private/xeno",
+  "version": "1.0.0",
+  "description": "crypto tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "node -r esm index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crislin2046/xeno.git"
+  },
+  "keywords": [
+    "crypto",
+    "xeno",
+    "tools"
+  ],
+  "author": "@dosy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/crislin2046/xeno/issues"
+  },
+  "homepage": "https://github.com/crislin2046/xeno#readme",
+  "dependencies": {
+    "esm": "^3.2.25"
+  }
+}

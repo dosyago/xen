@@ -2,9 +2,18 @@
   "name": "xen",
   "version": "1.0.2",
   "description": "crypto tools",
-  "main": "index.js",
+  "main": "node.js",
+  "module": "index.js",
+  "browser": "dist/index.js",
+  "browserslist": [
+    "> 5%"
+  ],
+  "pre-commit": [
+    "build"
+  ],
   "scripts": {
-    "test": "node -r esm index.js && node -r esm test.js"
+    "test": "node -r esm index.js && node -r esm test.js",
+    "build": "parcel build index.js --no-source-maps"
   },
   "repository": {
     "type": "git",
@@ -23,5 +32,8 @@
   "homepage": "https://github.com/crislin2046/xeno#readme",
   "dependencies": {
     "esm": "^3.2.25"
+  },
+  "devDependencies": {
+    "pre-commit": "^1.2.2"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "xen",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "crypto tools",
   "main": "index.js",
   "scripts": {

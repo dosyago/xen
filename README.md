@@ -54,3 +54,5 @@ xen.decrypt(xen.encrypt(' ',' '),' '); // ' '
 
 Internally theres 360 bits of state by default, but you can tune that. 
 
+-------
+

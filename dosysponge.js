@@ -1,11 +1,11 @@
-	import dosyrng from './dosyrng.js';
+  import dosyrng from './dosyrng.js';
   const dosysponge = {
   };
-  // Node or Browser, either is fine 
 	export default dosysponge;
   const DEFAULT_TURNS = 4;
   const DEFAULT_OUTPUT_SZ = 32;
   const $ = Symbol(`[[DosySpongeInternal]]`);
+
   // sponge, its internals and some basic tests
     class DosySpongePrivates {
       constructor( { rate, capacity, shift } ) {

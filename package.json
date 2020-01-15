@@ -1,5 +1,5 @@
 {
-  "name": "@dosy-private/xeno",
+  "name": "xen",
   "version": "1.0.0",
   "description": "crypto tools",
   "main": "index.js",

@@ -56,7 +56,7 @@ Internally theres 360 bits of state by default, but you can tune that.
 
 ## Testing results
 
-The below results are for the 18-byte, 1 shift variant on 128 Mb of RNG output.
+The below results are for the 18-byte, 1 shift variant.
 
 *The regular variant is 45-byte, 1 shift.*
 

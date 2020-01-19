@@ -160,8 +160,8 @@
 		function bits_to_bytes( bits ) {
 			const bytes = [];
 			while( bits.length ) {
-				const val = parseInt( bits.splice(0,8).join(''), 2 );
-				bytes.push( String.fromCharCode( val ) );
+				const val = parseInt( bits.splice(0,20).join(''), 2 );
+				bytes.push( String.fromCodePoint( val ) );
 			}
 			return bytes;
 		}
@@ -237,7 +237,7 @@
 			// combine
 			const cipher = e_iv + e_plain;
 
-      const out = new Uint16Array(iv_a.length + e.length);
+      const out = new Uint32Array(iv_a.length + e.length);
       out.set(iv_a);
       out.set(e,iv_a.length);
       return out;

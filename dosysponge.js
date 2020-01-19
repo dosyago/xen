@@ -62,7 +62,7 @@
                                                 iterations: iterations = DEFAULT_TURNS 
                                               } = {} ) {
         const mix = this[$].mixing_function;
-        const output = new Uint8Array( output_sz );
+        const output = new Uint32Array( output_sz );
         let i = 0;
         while( output_sz ) {
           // add the 'r' portion of the state to the output
@@ -127,14 +127,14 @@
     function getBytes( message ) {
       // FIXME: `.charCodeAt(0)` does not account for Unicode
       const padding_number = intToBytes( message.length + 1 );
-      const m = new Uint8Array( message.length + padding_number.length );
+      const m = new Uint32Array( message.length + padding_number.length );
       // fill m with the byte values of message 
       if ( typeof message == "string" ) {
         m.set( message.split('').map( str => str.charCodeAt(0) ) );
-      } else if ( message.constructor == Uint8Array ) {
+      } else if ( message.constructor == Uint32Array ) {
         m.set( message );
       } else {
-        throw new TypeError( `Sorry. Currently sponge only accepts messages that are Strings or Uint8 arrays.` );
+        throw new TypeError( `Sorry. Currently sponge only accepts messages that are Strings or Uint32Array arrays.` );
       }
       // pad with length 
       // SECURITY : as we use 32 bits to code length this is degenerate for lengths equal modulo 2**32
@@ -143,13 +143,13 @@
     }
     function intToBytes( int ) {
       const int_buf = new ArrayBuffer(4);
-      const int_bytes = new Uint8Array(int_buf);
+      const int_bytes = new Uint32Array(int_buf);
       const int_cast = new Uint32Array(int_buf); 
       int_cast[0] = int;
       return int_bytes;
     }
     function extract( num, state, capacity ) {
-      const slice = new Uint8Array( num );
+      const slice = new Uint32Array( num );
       for( let i = 0, j = 0; i < num; i += 1, j += capacity ) {
         slice[i] = state[j];
       }
@@ -164,17 +164,12 @@
     function format( bytes, out_format ) {
       let result = '';
       if ( out_format == 'hex' ) {
-        bytes.forEach( v => result += pad_output( 2, v.toString(16)) );
+        bytes.forEach( v => result += pad_output( 8, v.toString(16)) );
       } else if ( out_format == 'binary' ) {
-        bytes.forEach( v => result += String.fromCharCode(v) );
+        bytes.forEach( v => result += String.fromCodePoint(v) );
       } else if ( out_format == 'bytes' ) {
-        result = new Uint8Array( bytes );
+        result = new Uint32Array( bytes );
       } else if ( out_format = 'uint32s' ) {
-        if ( bytes.length & 3 !== 0 ) {
-          throw new TypeError( 
-            `Sorry, out format ${out_format} is not supported for output lengths that are not multiples of 4.` 
-          );
-        }
         result = new Uint32Array( bytes.buffer );
       } else {
         throw new TypeError( `Sorry, out format ${out_format} is not supported.` );

@@ -14,11 +14,11 @@
     return toBinary( fromHex( hexstr ) );
   }
   function toHex( bytes ) {
-    return Array.from( bytes ).reduce( (hs,bv) => hs + pad( bv.toString(16), 4, '0', true ), "" );
+    return Array.from( bytes ).reduce( (hs,bv) => hs + pad( bv.toString(16), 8, '0', true ), "" );
   }
   function fromHex( hexstr ) {
-    return new Uint16Array( Array.from( hexstr ).reduce( 
-      (pa,c,i) => i % 4 ? (pa[pa.length-1]+=c, pa) : (pa.push(c), pa) ,
+    return new Uint32Array( Array.from( hexstr ).reduce( 
+      (pa,c,i) => i % 8 ? (pa[pa.length-1]+=c, pa) : (pa.push(c), pa) ,
       []
     ).reduce( 
       (ba,hn) => (ba.push( parseInt(hn, 16)), ba),
@@ -41,7 +41,7 @@
   function toBinary(bytes) {
     const bs = [];
     for( const byte of bytes ) {
-      bs.push(String.fromCharCode(byte));
+      bs.push(String.fromCodePoint(byte));
     }
     return bs.join('');
   }
@@ -49,7 +49,7 @@
   function fromBinary(str) {
     const b = [];
     for( const char of str ) {
-      b.push(char.charCodeAt(0));
+      b.push(char.codePointAt(0));
     }
-    return new Uint16Array(b);
+    return new Uint32Array(b);
   }

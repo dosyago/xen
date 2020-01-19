@@ -1,6 +1,7 @@
-  // DOSYRNG - A family of 16-bit PRNGs ( CSPRNGs ) that are extraordinarily simple & pass PracRand
+  // DOSYRNG - A family of 32-bit PRNGs ( CSPRNGs ) that are extraordinarily simple & pass PracRand
   // For ref of PracRand - http://pracrand.sourceforge.net/
   // To access the state ( to say, 'key' the generator ), pass in a 'surface' object
+  const MAX = 0x10ffff;
   const dosyrng = {
     d451: surface => iterator( 45, 1, surface ), // passes PracRand
     d453: surface => iterator( 45, 3, surface ), // passes PracRand
@@ -19,11 +20,11 @@
       j = ( j + 1 ) % SZ;
       sum += s[i];
     }
-    return sum & 65535;
+    return sum % MAX;
   }
   // An iterator wrapper to create the state and turn the round function
-  function iterator( state_sz = 45 /* words */, shift = 1 /* bits */, surface = {} /* .s is the state */) {
-    const s = new Uint16Array(state_sz);
+  function iterator( state_sz = 45 /* double words */, shift = 1 /* bits */, surface = {} /* .s is the state */) {
+    const s = new Uint32Array(state_sz);
     const update_state = update.bind( null, s, state_sz, shift );
     expose( surface, 'state', s );
     return {

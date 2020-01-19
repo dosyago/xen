@@ -2,7 +2,7 @@
 
 **Crypto Tools**
 
-Want to play with some message-verified encryption and hasing? [live code sandbox here](https://codesandbox.io/s/xen-crypto-explorer-bkf7n?from-embed)
+Want to play with some message-verified encryption and hasing? See a [live code sandbox here](https://codesandbox.io/s/xen-crypto-explorer-bkf7n?from-embed).
 
 ## construction
 
@@ -48,7 +48,7 @@ xen.decrypt(xen.encrypt(' ',' '),' '); // ' '
 
 ```
 
-*Note does not currently support empty data or empty keys for encryption / decryption.*
+*We use the whole Unicode codepoint space (0 - 0x10ffff) and the hex encoding is to 6 nibbles which means in hex the range of values at some points appears to not vary, even tho underlying values evenly cover the full codepoint space.*
 
 **For more API options, see the code**.
 
@@ -963,4 +963,4 @@ length= 1 gigabyte (2^30 bytes), time= 20.7 seconds
 
 ---------
 
-
+# *Discover unknown!*

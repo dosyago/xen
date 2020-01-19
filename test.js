@@ -1,3 +1,4 @@
+  import assert from 'assert';
   import dc from './dosycrypt.js';
   import xen from './index.js';
 
@@ -14,9 +15,20 @@
   }
 
   function test_hash() {
-    const message = "THIS IS A TEST!"
+    let message = "THIS IS A TEST!"
     const digest = dc.hash( message, 32 );
+    const digestB = dc.hash( message, 32 );
     console.log( "Message", message, "hash", digest );
+    message += '!';
+    const digest2 = dc.hash( message, 32 );
+    console.log( "Message", message, "hash", digest );
+    message += '!';
+    const digest3 = dc.hash( message, 32 );
+    console.log( "Message", message, "hash", digest );
+    assert(digest == digestB, "Hash should be same");
+    assert(digest != digest2, "Hash should be different");
+    assert(digest != digest3, "Hash should be different");
+    assert(digest2 != digest3, "Hash should be different");
   }
 
   function test_cipher() {
@@ -74,3 +86,4 @@
     const decrypted = xen.decrypt( cipher, ' ' );
     console.log( "Decrypted", decrypted );
   }
+

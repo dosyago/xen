@@ -31,7 +31,8 @@
   },
   "homepage": "https://github.com/crislin2046/xeno#readme",
   "dependencies": {
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "utf8str": "^1.0.4"
   },
   "devDependencies": {
     "pre-commit": "^1.2.2"

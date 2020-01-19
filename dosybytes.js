@@ -1,3 +1,5 @@
+  import UTF8Str from 'utf8str';
+
   const dosybytes = {
     bin2hex, hex2bin,
     toBinary, toHex, 
@@ -8,6 +10,9 @@
 	export default dosybytes;
 
   function toBinary( bytes ) {
+    if ( typeof bytes == "string" ) {
+      bytes = new UTF8Str(bytes).bytes;
+    }
     return Array.from( bytes ).reduce( (bs,bv) => bs + String.fromCharCode(bv), "" );
   }
   function bin2hex( binstr ) {
@@ -17,6 +22,9 @@
     return toBinary( fromHex( hexstr ) );
   }
   function toHex( bytes ) {
+    if ( typeof bytes == "string" ) {
+      bytes = new UTF8Str(bytes).bytes;
+    }
     return Array.from( bytes ).reduce( (hs,bv) => hs + pad( bv.toString(16), 2, '0', true ), "" );
   }
   function fromBinary( binstr ) {

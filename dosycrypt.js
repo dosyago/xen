@@ -240,8 +240,8 @@
       const out = new Uint32Array(iv_a.length + e.length);
       out.set(iv_a);
       out.set(e,iv_a.length);
-      return out;
-			//return cipher;
+      //return out;
+			return cipher;
 		}
 		function full_decrypt( cipher, key ) {
 			const inst = instance( dosycrypt.rng1 );
@@ -250,8 +250,8 @@
 			const plain = [];
 			let iv_str;
 			let iv_mode = true;
-			//bytes.fromBinary( cipher ).forEach( val => {
-			cipher.forEach( val => {
+			bytes.fromBinary( cipher ).forEach( val => {
+			//cipher.forEach( val => {
 				const p = val ^ inst.round();
 				if ( iv_mode ) {
 					if ( p == ":".charCodeAt(0) ) {

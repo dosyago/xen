@@ -164,7 +164,7 @@
     function format( bytes, out_format ) {
       let result = '';
       if ( out_format == 'hex' ) {
-        bytes.forEach( v => result += pad_output( 8, v.toString(16)) );
+        bytes.forEach( v => result += pad_output( 6, v.toString(16)) );
       } else if ( out_format == 'binary' ) {
         bytes.forEach( v => result += String.fromCodePoint(v) );
       } else if ( out_format == 'bytes' ) {

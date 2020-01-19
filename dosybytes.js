@@ -14,11 +14,11 @@
     return toBinary( fromHex( hexstr ) );
   }
   function toHex( bytes ) {
-    return Array.from( bytes ).reduce( (hs,bv) => hs + pad( bv.toString(16), 8, '0', true ), "" );
+    return Array.from( bytes ).reduce( (hs,bv) => hs + pad( bv.toString(16), 6, '0', true ), "" );
   }
   function fromHex( hexstr ) {
     return new Uint32Array( Array.from( hexstr ).reduce( 
-      (pa,c,i) => i % 8 ? (pa[pa.length-1]+=c, pa) : (pa.push(c), pa) ,
+      (pa,c,i) => i % 6 ? (pa[pa.length-1]+=c, pa) : (pa.push(c), pa) ,
       []
     ).reduce( 
       (ba,hn) => (ba.push( parseInt(hn, 16)), ba),

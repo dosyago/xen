@@ -31,6 +31,14 @@
     assert(digest != digest2, "Hash should be different");
     assert(digest != digest3, "Hash should be different");
     assert(digest2 != digest3, "Hash should be different");
+    const d = dc.hash("HELLO WORLD", 32);
+    for( let i = 0 ; i < 1000; i ++ ) {
+      const d2 = dc.hash("HELLO WORLD", 32); 
+      if ( d != d2 ) {
+        console.log("Hash not equal", d, d2);
+        throw new TypeError('hash');
+      }
+    }
   }
 
   function test_cipher() {
@@ -75,8 +83,9 @@
     const key = "thisisasecretkey";
     console.log( "Plain", plain, "key", key );
     const cipher = dc.full_encrypt( plain, key );
-    console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
-    const decrypted = dc.full_decrypt( dc.bytes.hex2bin(dc.bytes.bin2hex(cipher)), key );
+    //console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
+    //const decrypted = dc.full_decrypt( dc.bytes.hex2bin(dc.bytes.bin2hex(cipher)), key );
+    const decrypted = dc.full_decrypt( cipher, key );
     assert.equal(plain,decrypted);
     console.log( "Decrypted", decrypted );
   }
@@ -86,7 +95,7 @@
     const key = "thisisasecretkey";
     console.log( "Plain", plain, "key", key );
     const cipher = dc.full_encrypt( plain, key );
-    console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
+    //console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
     const decrypted = dc.full_decrypt( cipher, key );
     console.log( "Decrypted", decrypted );
     console.log(dc.bytes.fromBinary(plain), dc.bytes.fromBinary(decrypted));
@@ -98,8 +107,9 @@
     const key = "";
     console.log( "Plain", plain, "key", key );
     const cipher = dc.full_encrypt( plain, key );
-    console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
-    const decrypted = dc.full_decrypt( dc.bytes.hex2bin(dc.bytes.bin2hex(cipher)), key );
+    //console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
+    //const decrypted = dc.full_decrypt( dc.bytes.hex2bin(dc.bytes.bin2hex(cipher)), key );
+    const decrypted = dc.full_decrypt( cipher, key );
     assert.equal(plain,decrypted);
     console.log( "Decrypted", decrypted );
   }
@@ -109,13 +119,14 @@
     const key = "excellent";
     console.log( "Plain", plain, "key", key );
     const cipher = dc.full_encrypt( plain, key );
-    const cipher2 = dc.bytes.hex2bin(dc.bytes.bin2hex(cipher));
-    const a = dc.bytes.bin2hex(cipher);
-    const b= dc.bytes.bin2hex(cipher2);
+    //const cipher2 = dc.bytes.hex2bin(dc.bytes.bin2hex(cipher));
+    //const a = dc.bytes.bin2hex(cipher);
+    //const b= dc.bytes.bin2hex(cipher2);
     //console.log(a,b);
-    assert.equal(a,b);
-    const decrypted = dc.full_decrypt( cipher2, key );
-    console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
+    //assert.equal(a,b);
+    //const decrypted = dc.full_decrypt( cipher2, key );
+    const decrypted = dc.full_decrypt( cipher, key );
+    //console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
     assert.equal(plain,decrypted);
     console.log( "Decrypted", decrypted );
   }
@@ -124,9 +135,10 @@
     console.log("Empty hash", xen.hash(''));
     console.log("Empty kdf", xen.kdf(''));
     const cipher = xen.encrypt( ' ', ' ' );
-    console.log("Empty encrypt", xen.bytes.bin2hex(cipher) );
+    //console.log("Empty encrypt", xen.bytes.bin2hex(cipher) );
     const decrypted = xen.decrypt( cipher, ' ' );
     console.log( "Decrypted", decrypted );
+    assert.equal(' ', decrypted);
   }
 
 

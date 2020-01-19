@@ -213,19 +213,20 @@
         data = EMPTY;
       }
 			const inst = instance( dosycrypt.rng1 );
-			let iv = bytes.fromHex( dosycrypt.generate_iv( IV_ENTROPY, IV_SZ ) );
-      //console.log(iv);
-      iv = bytes.toBinary(iv).replace(/:/g, 'z');
+			const iv = dosycrypt.generate_iv( IV_ENTROPY, IV_SZ );
+      //console.log("iv", iv);
 			//console.log("IV", iv, iv.length);
 			// schedule key and encrypt iv
-			const e_iv = bytes.toBinary( dosycrypt.encrypt( key, iv + ":", null, inst ) );
+      const iv_a = dosycrypt.encrypt( key, iv + ":", null, inst );
+			const e_iv = bytes.toBinary( iv_a );
 			// schedule iv
 			dosycrypt.schedule( iv, inst );
 			// form iv:data to hash it
 			const hashable = iv + ":" + data;
-			//console.log( "Hashable", hashable );
+			//console.log( "Hashable", bytes.fromBinary(hashable));
 			// compute its hash 
 			const hash = dosycrypt.hash( hashable, HASH_SZ );
+      //console.log("Hash", hash);
 			// form data:hash
 			const plain = data + ":" + hash;
 			// encrypt it
@@ -235,7 +236,12 @@
 			const e_plain = bytes.toBinary( e );
 			// combine
 			const cipher = e_iv + e_plain;
-			return cipher;
+
+      const out = new Uint16Array(iv_a.length + e.length);
+      out.set(iv_a);
+      out.set(e,iv_a.length);
+      return out;
+			//return cipher;
 		}
 		function full_decrypt( cipher, key ) {
 			const inst = instance( dosycrypt.rng1 );
@@ -244,7 +250,8 @@
 			const plain = [];
 			let iv_str;
 			let iv_mode = true;
-			bytes.fromBinary( cipher ).forEach( val => {
+			//bytes.fromBinary( cipher ).forEach( val => {
+			cipher.forEach( val => {
 				const p = val ^ inst.round();
 				if ( iv_mode ) {
 					if ( p == ":".charCodeAt(0) ) {
@@ -261,7 +268,6 @@
 				}
 			});
 			let plain_str;
-      //console.log('iv plain', iv, plain);
 			//console.log( plain );
 			try {
 				plain_str = stringify( plain );
@@ -272,7 +278,7 @@
 			}
 			const hash_sep = plain_str.lastIndexOf( ":" );
 			if ( hash_sep == -1 && plain_str.length > 0 ) {
-        console.log(plain_str, bytes.fromBinary(plain_str));
+        //console.log(plain_str, bytes.fromBinary(plain_str));
 				throw new TypeError( "Cannot decrypt." );
 			}
 			const hash = plain_str.slice( hash_sep + 1 );
@@ -280,9 +286,9 @@
 			const hashable = iv_str + ":" + data;
       //console.log("hash hashable", hash, hashable);
 			const computed_hash = dosycrypt.hash( hashable, HASH_SZ );
+      //console.log( "Hashable", bytes.fromBinary(hashable));
 			if ( hash == computed_hash ) {
 				//console.log( "IV", iv_str, "plain", plain_str );
-				//console.log( "Hashable", hashable );
 				//console.log( "computed_hash", computed_hash );
 				//console.log( "Computed hash equals. Data is valid." );
 				const data = plain_str.slice(0, hash_sep );
@@ -291,7 +297,7 @@
         }
 				return data;
 			} else {
-        console.log("hash", hash, "computed", computed_hash, "hashable", hashable, "plain", plain_str, "bytes", bytes.fromBinary(plain_str));
+        //console.log("hash", hash, "computed", computed_hash, "hashable", hashable, "plain", plain_str, "bytes", bytes.fromBinary(plain_str));
 				throw new TypeError( "Cannot decrypt." );
 			}
 		}

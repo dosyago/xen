@@ -208,7 +208,7 @@
 		Object.assign( dosycrypt, {
 			full_encrypt, full_decrypt, bytes, 
 		});
-		function full_encrypt( data = EMPTY, key ) {
+		function full_encrypt( data = EMPTY, key = '' ) {
       if ( ! data || data.length == 0 ) {
         data = EMPTY;
       }
@@ -235,7 +235,7 @@
 			const cipher = e_iv + e_plain;
 			return cipher;
 		}
-		function full_decrypt( cipher, key ) {
+		function full_decrypt( cipher, key = '' ) {
 			const inst = instance( dosycrypt.rng1 );
 			dosycrypt.schedule( key, inst );
 			const iv = [];

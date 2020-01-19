@@ -2,11 +2,11 @@
 
 **Crypto Tools**
 
-Want to play with some message-verified encryption and hasing? See a [live code sandbox here](https://codesandbox.io/s/xen-crypto-explorer-bkf7n?from-embed).
+Want to play with some message-verified encryption and hashing? See a [live code sandbox here](https://codesandbox.io/s/xen-crypto-explorer-bkf7n?from-embed).
 
 ## construction
 
-constructed using slow, novel and mostly unknown primitives that pass SMHasher, Dieharder and Practrand, combined using standard constructions like sponge, to produce a hash, a KDF, and symmetric encryption.
+constructed using slow, novel and mostly unknown primitives that pass Dieharder and Practrand, combined using standard constructions like sponge, to produce a hash, a KDF, and symmetric encryption.
 
 ## disclaimer
 

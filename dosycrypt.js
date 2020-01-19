@@ -43,7 +43,7 @@
 		function absorb( message, hasher ) {
 			const m = new UTF8Str( message ).bytes;
 			let i = 0;
-			while( i < m.length ) {
+			while( i < m.length + BLOCK_SZ - 1) {
 				const chunk = m.subarray(i, BLOCK_SZ); 
 				include( chunk, hasher );
 				let turns = TURNS;

@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "test": "node -r esm index.js && node -r esm test.js",
-    "build": "parcel build index.js --no-source-maps"
+    "build": "parcel build index.js --no-source-maps && rm -rf .cache"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 {
   "name": "xen",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "crypto tools",
   "main": "node.js",
   "module": "index.js",

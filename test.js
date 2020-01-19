@@ -11,20 +11,21 @@
     test_entropy();
     test_full_cipher();
     test_full_cipher2();
+    //test_full_cipher3();
     basic_test();
   }
 
   function test_hash() {
-    let message = "THIS IS A TEST!"
+    let message = "1. THIS IS A TEST!"
     const digest = dc.hash( message, 32 );
     const digestB = dc.hash( message, 32 );
-    console.log( "Message", message, "hash", digest );
+    console.log( "Message  ", message, "hash", digest );
     message += '!';
     const digest2 = dc.hash( message, 32 );
-    console.log( "Message", message, "hash", digest );
+    console.log( "Message ", message, "hash", digest2 );
     message += '!';
     const digest3 = dc.hash( message, 32 );
-    console.log( "Message", message, "hash", digest );
+    console.log( "Message", message, "hash", digest3 );
     assert(digest == digestB, "Hash should be same");
     assert(digest != digest2, "Hash should be different");
     assert(digest != digest3, "Hash should be different");
@@ -48,9 +49,19 @@
 
   function test_entropy() {
     let run = 100;
+    let min = 100000;
+    let max = 0;
     while( run--) {
-      console.log( "Float run time", dc.time_float_run() );
+      //console.log( "Float run time", dc.time_float_run() );
+      const rt = dc.time_float_run();
+      if ( rt > max ) {
+        max = rt;
+      }
+      if ( rt < min ) {
+        min = rt;
+      }
     }
+    console.log(`Float run range from ${min} to ${max}`);
     console.log( "32 bytes of entropy", dc.bytes.bin2hex( dc.collect_entropy_bytes() ));
     console.log( "32 bytes of entropy", dc.bytes.bin2hex( dc.collect_entropy_bytes() ));
     console.log( "32 bytes of entropy", dc.bytes.bin2hex( dc.collect_entropy_bytes() ));
@@ -64,7 +75,7 @@
     console.log( "Plain", plain, "key", key );
     const cipher = dc.full_encrypt( plain, key );
     console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
-    const decrypted = dc.full_decrypt( cipher, key );
+    const decrypted = dc.full_decrypt( dc.bytes.hex2bin(dc.bytes.bin2hex(cipher)), key );
     console.log( "Decrypted", decrypted );
   }
 
@@ -75,6 +86,16 @@
     const cipher = dc.full_encrypt( plain, key );
     console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
     const decrypted = dc.full_decrypt( cipher, key );
+    console.log( "Decrypted", decrypted );
+  }
+
+  function test_full_cipher3() {
+    const plain = "";
+    const key = "";
+    console.log( "Plain", plain, "key", key );
+    const cipher = dc.full_encrypt( plain, key );
+    console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
+    const decrypted = dc.full_decrypt( dc.bytes.hex2bin(dc.bytes.bin2hex(cipher)), key );
     console.log( "Decrypted", decrypted );
   }
 

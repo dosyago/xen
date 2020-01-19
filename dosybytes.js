@@ -1,4 +1,3 @@
-
   const dosybytes = {
     bin2hex, hex2bin,
     toBinary, toHex, 
@@ -8,12 +7,6 @@
 
 	export default dosybytes;
 
-  function toBinary( bytes ) {
-    if ( typeof bytes == "string" ) {
-      bytes = fromBinary(bytes);
-    }
-    return Array.from( bytes ).reduce( (bs,bv) => bs + String.fromCharCode(bv), "" );
-  }
   function bin2hex( binstr ) {
     return toHex( fromBinary( binstr ) );
   }
@@ -21,13 +14,7 @@
     return toBinary( fromHex( hexstr ) );
   }
   function toHex( bytes ) {
-    if ( typeof bytes == "string" ) {
-      bytes = fromBinary(bytes);
-    }
     return Array.from( bytes ).reduce( (hs,bv) => hs + pad( bv.toString(16), 2, '0', true ), "" );
-  }
-  function fromBinary( binstr ) {
-    return new Uint8Array( Array.from( binstr ).reduce( (ba,c) => (ba.push(c.charCodeAt(0)), ba), [] ) );
   }
   function fromHex( hexstr ) {
     return new Uint8Array( Array.from( hexstr ).reduce( 
@@ -38,6 +25,7 @@
       []
     ) );
   }
+
   function pad( str, width, char, left, right ) {
     const padding_length = Math.max( 0, width - str.length );
     const padding = new Array( padding_length + 1 ).join( char );
@@ -49,4 +37,19 @@
     }
     return str;
   }
+  
+  function toBinary(bytes) {
+    const bs = [];
+    for( const byte of bytes ) {
+      bs.push(String.fromCharCode(byte));
+    }
+    return bs.join('');
+  }
 
+  function fromBinary(str) {
+    const b = [];
+    for( const char of str ) {
+      b.push(char.charCodeAt(0));
+    }
+    return new Uint16Array(b);
+  }

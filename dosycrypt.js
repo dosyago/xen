@@ -88,7 +88,7 @@
 			plain = bytes.fromBinary(plain);
 			const cipher = [];
 			const inst = existing_instance || instance( algo );
-			if ( !! key ) {
+			if ( typeof key == "string" ) {
 				schedule( key, inst );
 			} 
 			plain.forEach( val => {
@@ -100,7 +100,7 @@
 			cipher = bytes.fromBinary( cipher );
 			const plain = [];
 			const inst = existing_instance || instance( algo );
-			if ( !! key ) {
+			if ( typeof key == "string" ) {
 				schedule( key, inst );
 			}
 			cipher.forEach( val => {
@@ -208,12 +208,9 @@
 		Object.assign( dosycrypt, {
 			full_encrypt, full_decrypt, bytes, 
 		});
-		function full_encrypt( data = EMPTY, key = EMPTY ) {
+		function full_encrypt( data = EMPTY, key ) {
       if ( ! data || data.length == 0 ) {
         data = EMPTY;
-      }
-      if ( ! key || key.length == 0 ) {
-        key = EMPTY;
       }
 			const inst = instance( dosycrypt.rng1 );
 			let iv = bytes.fromHex( dosycrypt.generate_iv( IV_ENTROPY, IV_SZ ) );
@@ -232,16 +229,15 @@
 			// form data:hash
 			const plain = data + ":" + hash;
 			// encrypt it
-      //console.log(plain, bytes.fromBinary(plain), iv);
-			const e_plain = bytes.toBinary( dosycrypt.encrypt( null, plain, null, inst ) );
+      //console.log(plain, bytes.fromBinary(plain));
+			const e = dosycrypt.encrypt( null, plain, null, inst );
+      //console.log("E", (e));
+			const e_plain = bytes.toBinary( e );
 			// combine
 			const cipher = e_iv + e_plain;
 			return cipher;
 		}
-		function full_decrypt( cipher, key = EMPTY ) {
-      if ( ! key || key.length == 0 ) {
-        key = EMPTY;
-      }
+		function full_decrypt( cipher, key ) {
 			const inst = instance( dosycrypt.rng1 );
 			dosycrypt.schedule( key, inst );
 			const iv = [];
@@ -275,8 +271,8 @@
 				throw new TypeError( "Cannot decrypt." );
 			}
 			const hash_sep = plain_str.lastIndexOf( ":" );
-			if ( hash_sep == -1 ) {
-        //console.log(plain_str, bytes.fromBinary(plain_str));
+			if ( hash_sep == -1 && plain_str.length > 0 ) {
+        console.log(plain_str, bytes.fromBinary(plain_str));
 				throw new TypeError( "Cannot decrypt." );
 			}
 			const hash = plain_str.slice( hash_sep + 1 );
@@ -295,6 +291,7 @@
         }
 				return data;
 			} else {
+        console.log("hash", hash, "computed", computed_hash, "hashable", hashable, "plain", plain_str, "bytes", bytes.fromBinary(plain_str));
 				throw new TypeError( "Cannot decrypt." );
 			}
 		}

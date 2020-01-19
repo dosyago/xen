@@ -10,8 +10,9 @@
     test_iv();
     test_entropy();
     test_full_cipher();
-    test_full_cipher2();
-    //test_full_cipher3();
+    //test_full_cipher2();
+    test_full_cipher3();
+    test_full_cipher4();
     basic_test();
   }
 
@@ -76,6 +77,7 @@
     const cipher = dc.full_encrypt( plain, key );
     console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
     const decrypted = dc.full_decrypt( dc.bytes.hex2bin(dc.bytes.bin2hex(cipher)), key );
+    assert.equal(plain,decrypted);
     console.log( "Decrypted", decrypted );
   }
 
@@ -87,6 +89,8 @@
     console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
     const decrypted = dc.full_decrypt( cipher, key );
     console.log( "Decrypted", decrypted );
+    console.log(dc.bytes.fromBinary(plain), dc.bytes.fromBinary(decrypted));
+    assert.equal(plain,decrypted);
   }
 
   function test_full_cipher3() {
@@ -96,6 +100,23 @@
     const cipher = dc.full_encrypt( plain, key );
     console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
     const decrypted = dc.full_decrypt( dc.bytes.hex2bin(dc.bytes.bin2hex(cipher)), key );
+    assert.equal(plain,decrypted);
+    console.log( "Decrypted", decrypted );
+  }
+
+  function test_full_cipher4() {
+    const plain = "今天你在做什么？";
+    const key = "excellent";
+    console.log( "Plain", plain, "key", key );
+    const cipher = dc.full_encrypt( plain, key );
+    const cipher2 = dc.bytes.hex2bin(dc.bytes.bin2hex(cipher));
+    const a = dc.bytes.bin2hex(cipher);
+    const b= dc.bytes.bin2hex(cipher2);
+    //console.log(a,b);
+    assert.equal(a,b);
+    const decrypted = dc.full_decrypt( cipher2, key );
+    console.log( "Cipher", dc.bytes.bin2hex( cipher ) );
+    assert.equal(plain,decrypted);
     console.log( "Decrypted", decrypted );
   }
 
@@ -107,4 +128,6 @@
     const decrypted = xen.decrypt( cipher, ' ' );
     console.log( "Decrypted", decrypted );
   }
+
+
 

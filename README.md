@@ -54,13 +54,13 @@ xen.decrypt(xen.encrypt(' ',' '),' '); // ' '
 
 ## technical details
 
-Internally theres 360 bits of state by default, but you can tune that. 
+Internally there's 1440 bits of state by default, but you can tune that. 
 
 ## Testing results
 
-The below results are for the 18-byte, 1 shift variant.
+The below results are for an 18-byte, 1 shift variant.
 
-*The regular variant is 45-byte, 1 shift.*
+*The regular variant is 45-double words, 1 shift.*
 
 ### Dieharder
 

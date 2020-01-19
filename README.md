@@ -48,13 +48,13 @@ xen.decrypt(xen.encrypt(' ',' '),' '); // ' '
 
 ```
 
-*We use the whole Unicode codepoint space (0 - 0x10ffff) and the hex encoding is to 6 nibbles which means in hex the range of values at some points appears to not vary, even tho underlying values evenly cover the full codepoint space.*
-
 **For more API options, see the code**.
 
 ## technical details
 
 Internally there's 1440 bits of state by default, but you can tune that. 
+
+*We use the whole Unicode codepoint space (0 - 0x10ffff) and the hex encoding is to 6 nibbles which means in hex the range of values at some points appears to not vary, even tho underlying values evenly cover the full codepoint space.*
 
 ## Testing results
 

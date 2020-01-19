@@ -178,7 +178,7 @@
 		function generate_iv( entropy_sz = IV_ENTROPY_BYTES, iv_sz = IV_BYTES ) {
 			const bytes = dosycrypt.collect_entropy_bytes( entropy_sz );
 			const digest = dosycrypt.hash( bytes, iv_sz );
-			return digest;
+			return 'abcdef';
 		}
 	}
 	// full encryption and integrity algorithm

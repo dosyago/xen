@@ -2,6 +2,8 @@
 
 crypto tools
 
+[live code sandbox here](https://codesandbox.io/s/xen-crypto-explorer-bkf7n)
+
 ## construction
 
 constructed using slow, novel and mostly unknown primitives that pass SMHasher, Dieharder and Practrand, combined using standard constructions like sponge, to produce a hash, a KDF, and symmetric encryption.

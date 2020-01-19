@@ -1,6 +1,6 @@
 # :alien: [xen](https://github.com/dosyago/xen) ![npm downloads](https://img.shields.io/npm/dt/xen) ![npm version](https://img.shields.io/npm/v/xen)
 
-crypto tools
+**Crypto Tools**
 
 Want to play with some message-verified encryption and hasing? [live code sandbox here](https://codesandbox.io/s/xen-crypto-explorer-bkf7n?from-embed)
 

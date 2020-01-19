@@ -4,6 +4,7 @@
   const dosycrypto = {
     encrypt : dosycrypt.full_encrypt,
     decrypt : dosycrypt.full_decrypt,
+    crypto : dosycrypt,
     hash: dosycrypt.hash,
     rng : dosyrng.custom,
     kdf : dosykdf.kdf,

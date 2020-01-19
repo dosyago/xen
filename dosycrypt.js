@@ -178,7 +178,7 @@
 		function generate_iv( entropy_sz = IV_ENTROPY_BYTES, iv_sz = IV_BYTES ) {
 			const bytes = dosycrypt.collect_entropy_bytes( entropy_sz );
 			const digest = dosycrypt.hash( bytes, iv_sz );
-			return 'abcdef';
+			return digest;
 		}
 	}
 	// full encryption and integrity algorithm
@@ -207,8 +207,10 @@
 		});
 		function full_encrypt( data, key ) {
 			const inst = instance( dosycrypt.rng1 );
-			const iv = dosycrypt.generate_iv( IV_ENTROPY, IV_SZ );
-			//console.log("IV", iv);
+			let iv = bytes.fromHex( dosycrypt.generate_iv( IV_ENTROPY, IV_SZ ) );
+      //console.log(iv);
+      iv = bytes.toBinary(iv);
+			//console.log("IV", iv, iv.length);
 			// schedule key and encrypt iv
 			const e_iv = bytes.toBinary( dosycrypt.encrypt( key, iv + ":", null, inst ) );
 			// schedule iv
@@ -237,7 +239,9 @@
 				const p = val ^ inst.round();
 				if ( iv_mode ) {
 					if ( p == ":".charCodeAt(0) ) {
-						iv_str = bytes.toBinary( iv );
+            //console.log(iv);
+						iv_str = stringify( iv ).chars.join('');
+            //console.log("IV_str", iv_str);
 						dosycrypt.schedule( iv_str, inst );
 						iv_mode = false;
 						return; // discard ":"

@@ -2,7 +2,7 @@
 
 crypto tools
 
-[live code sandbox here](https://codesandbox.io/s/xen-crypto-explorer-bkf7n)
+Want to play with some message-verified encryption and hasing? [live code sandbox here](https://codesandbox.io/s/xen-crypto-explorer-bkf7n?from-embed)
 
 ## construction
 

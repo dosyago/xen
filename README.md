@@ -4,6 +4,9 @@
 
 Want to play with some message-verified encryption and hashing? See a [live code sandbox here](https://codesandbox.io/s/xen-crypto-explorer-bkf7n?from-embed).
 
+
+**Please consider this primitive insecure as it does not pass SMHasher**
+
 ## construction
 
 constructed using slow, novel and mostly unknown primitives that pass Dieharder and Practrand, combined using standard constructions like sponge, to produce a hash, a KDF, and symmetric encryption.

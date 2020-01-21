@@ -23,9 +23,11 @@ typedef uint32_t                    u32;
 typedef uint64_t                    u64;
 
 const  u32 MAX    = 0xFFFFFFFF;
-const  u32 SZ     = 45;
+const  u32 SZ     = 11;
 const  u32 SZ4    = SZ<<2;
-const  u32 SHIFT  = 1;
+const  u32 SHIFT  = 11;
+const  u32 MASK   = (1<<SHIFT)-1;
+const  u32 HIMASK = MASK << (32-SHIFT);
 
 void xen_64          ( const void * key, int len, uint32_t seed, void * out );
 

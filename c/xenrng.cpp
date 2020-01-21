@@ -23,10 +23,10 @@
       for( int i = 0; i < SZ; i++ ) {
         s[j] ^= (s[i] >> SHIFT) ^ (sum << SHIFT);
         s[i] += s[j] + 1;
-        j = ( j + 1 ) % SZ;
+        j = (j + 1) % SZ;
         sum += s[i];
       }
-      return sum & MAX;
+      return sum;
     }
 
   //---------
@@ -39,14 +39,14 @@
 
       int i = 0;
       int Len = len >> 4;
-      for( int i = 0; i < Len; i++ ) {
-        s[i%SZ] += msg[i];
+      for( i; i < Len; i++ ) {
+        s[i%SZ] += msg[i] + i;
       }
 
       i <<= 4;
 
       while( i < len ) {
-        s8[i%SZ4] += m8[i];
+        s8[i%SZ4] += m8[i] + i;
         i += 1;
       }
     }
@@ -65,10 +65,14 @@
       u32 SUM1, SUM2;
 
       schedule( seed32,  s,   4 );
-      update( s );
-      schedule( key32,   s, len );
       SUM1 = update( s );
-      SUM2 = update( s );
+      SUM2 = SUM1;
+      schedule( key32,   s, len );
+      SUM1 += update( s ); SUM2 ^= update( s );
+      schedule( key32,   s, len );
+      SUM1 += update( s ); SUM2 ^= update( s );
+      SUM1 += update( s ); SUM2 ^= update( s );
+      SUM1 += update( s ); SUM2 ^= update( s );
 
       z[0] = SUM1;
       z[1] = SUM2;

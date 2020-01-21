@@ -9,10 +9,12 @@
     "> 5%"
   ],
   "pre-commit": [
-    "build"
+    "build",
+    "test"
   ],
   "scripts": {
-    "test": "node -r esm index.js && node -r esm test.js",
+    "test": "node -r esm index.js && node node.js && node -r esm test.js",
+    "testrng": "node -r esm rngtest.js",
     "build": "parcel build index.js --no-source-maps && rm -rf .cache"
   },
   "repository": {

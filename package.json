@@ -1,10 +1,9 @@
 {
   "name": "xen",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "crypto tools",
-  "main": "node.js",
-  "node": "node.js",
   "main": "index.js",
+  "node": "node.js",
   "module": "dist/main.js",
   "browser": "dist/main.js",
   "browserslist": [

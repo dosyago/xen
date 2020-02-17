@@ -1,10 +1,14 @@
+  import {beamsplitter} from 'beamsplitter';
+
   // DOSYRNG - A family of 32-bit PRNGs ( CSPRNGs ) that are extraordinarily simple & pass PracRand
   // For ref of PracRand - http://pracrand.sourceforge.net/
   // To access the state ( to say, 'key' the generator ), pass in a 'surface' object
+  // The default RNG now is dbs ( based on beamsplitter )
   const MAX = 0x10ffff;
   const dosyrng = {
-    d451: surface => iterator( 45, 1, surface ), // passes PracRand
-    d453: surface => iterator( 45, 3, surface ), // passes PracRand
+    d451: surface => iterator( 45, 1, surface ), // passes PracRand (but not SMHasher)
+    d453: surface => iterator( 45, 3, surface ), // passes PracRand (but not SMHasher)
+    dbs: surface => iterator_bs( surface ), // passes SMHasher
     custom: iterator // other values are untested. Set your own!
   };
   // Node.js or Browser, either is fine
@@ -66,5 +70,11 @@
   }
   function expose( obj, key, val ) {
     Object.defineProperty( obj, key, { enumerable: true, get : () => val } );
+  }
+
+  // beamsplitter version
+
+  function iterator_bs( surface ) {
+
   }
 

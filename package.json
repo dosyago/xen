@@ -3,10 +3,13 @@
   "version": "1.1.0",
   "description": "crypto tools",
   "main": "node.js",
-  "module": "index.js",
-  "browser": "dist/index.js",
+  "node": "node.js",
+  "main": "index.js",
+  "module": "dist/main.js",
+  "browser": "dist/main.js",
   "browserslist": [
-    "> 5%"
+    "latest 1 chrome",
+    "node 12"
   ],
   "pre-commit": [
     "build",
@@ -15,7 +18,7 @@
   "scripts": {
     "test": "node -r esm index.js && node node.js && node -r esm test.js",
     "testrng": "node -r esm rngtest.js",
-    "build": "parcel build index.js --no-source-maps && rm -rf .cache"
+    "build": "npx webpack ."
   },
   "repository": {
     "type": "git",
@@ -33,9 +36,15 @@
   },
   "homepage": "https://github.com/crislin2046/xeno#readme",
   "dependencies": {
+    "beamsplitter": "^2.0.3",
     "esm": "^3.2.25"
   },
   "devDependencies": {
-    "pre-commit": "^1.2.2"
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-syntax-bigint": "^7.8.3",
+    "parcel": "^1.12.4",
+    "pre-commit": "^1.2.2",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
   }
 }

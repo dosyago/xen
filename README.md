@@ -4,8 +4,7 @@
 
 Want to play with some message-verified encryption and hashing? See a [live code sandbox here](https://codesandbox.io/s/xen-crypto-explorer-bkf7n?from-embed).
 
-
-**Please consider this primitive insecure as it does not pass SMHasher**
+**Please consider this primitive secure, it is based on [Beamsplitter](https://github.com/cris691/beamsplitter)** - A SMHasher-passing hash function built around a 10x64-bit s-box.
 
 ## construction
 

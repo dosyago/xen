@@ -1,8 +1,12 @@
+  import {beamsplitter, state32} from 'beamsplitter';
+
   // DOSYRNG - A family of 32-bit PRNGs ( CSPRNGs ) that are extraordinarily simple & pass PracRand
   // For ref of PracRand - http://pracrand.sourceforge.net/
   // To access the state ( to say, 'key' the generator ), pass in a 'surface' object
+  const BI_MAX = 0x10ffffn;
   const MAX = 0x10ffff;
   const dosyrng = {
+    bs: surface => iterator( null, null, surface),
     d451: surface => iterator( 45, 1, surface ), // passes PracRand
     d453: surface => iterator( 45, 3, surface ), // passes PracRand
     custom: iterator // other values are untested. Set your own!
@@ -24,8 +28,20 @@
   }
   // An iterator wrapper to create the state and turn the round function
   function iterator( state_sz = 45 /* double words */, shift = 1 /* bits */, surface = {} /* .s is the state */) {
-    const s = new Uint32Array(state_sz);
-    const update_state = update.bind( null, s, state_sz, shift );
+    let s 
+    let update_state;
+    if ( state_sz && shift ) {
+      s = new Uint32Array(state_sz);
+      update_state = update.bind( null, s, state_sz, shift );
+    } else {
+      s = new Uint32Array(8);
+      s = state32;
+      update_state = () => {
+        const X = s.reduce((S,x) => S+'/'+x.toString(16), 'xen');
+        console.log({X, s});
+        return Number(beamsplitter(X, 92133) % BI_MAX);
+      };
+    }
     expose( surface, 'state', s );
     return {
       round() {

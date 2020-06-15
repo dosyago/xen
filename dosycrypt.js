@@ -3,7 +3,8 @@
   const EMPTY = '<empty message>';
 	const dosycrypt = {
 		rng1: surface => dosyrng.d451( surface ),
-		rng2: surface => dosyrng.d453( surface )
+		rng2: surface => dosyrng.d453( surface ),
+    rng3: surface => dosyrng.bs( surface )
 	};
 	export default dosycrypt;
 

@@ -3,7 +3,7 @@ import rng from './dosyrng.js';
 
 const chunk = 1000000;
 const words = (1024**3)/2;
-const instance = rng.d451();
+const instance = rng.bs();
 
 test_iterate();
 test_1Gb();
